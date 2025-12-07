@@ -68,16 +68,17 @@ const cards = Array.from(stack.querySelectorAll(".card"));
 
 let currentIndex = 0;
 
-/* Initial layout update */
 function updateStack() {
   cards.forEach((card, index) => {
     const offset = index - currentIndex;
-    card.style.zIndex = cards.length - index;
+
+    // Highest zIndex for the current card
+    card.style.zIndex = cards.length - Math.abs(offset);
+
     card.style.transform = `translateX(${offset * 20}px) scale(${1 - Math.abs(offset) * 0.05})`;
     card.style.opacity = Math.abs(offset) > 2 ? 0 : 1;
   });
 }
-updateStack();
 
 /* ---------------------------
    FIXED AUTO-SWIPE FUNCTION
