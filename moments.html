@@ -23,15 +23,16 @@
     <p class="subtitle">(Swipe the cards or let them auto-play)</p>
 
     <div class="card-stack">
-      <div class="card"><img src="IMG-20251207-WA0012.jpg" alt="Moment 1" /></div>
-      <div class="card"><img src="IMG-20251207-WA0013.jpg" alt="Moment 2" /></div>
-      <div class="card"><img src="IMG-20251207-WA0014.jpg" alt="Moment 3" /></div>
-      <div class="card"><img src="IMG-20251207-WA0015.jpg" alt="Moment 4" /></div>
-      <div class="card"><img src="IMG-20251207-WA0016.jpg" alt="Moment 5" /></div>
+      <div class="card"><img src="IMG-20251207-WA0016.jpg" alt="Moment 1" /></div>
+      <div class="card"><img src="IMG-20251207-WA0014.jpg" alt="Moment 2" /></div>
+      <div class="card"><img src="IMG-20251207-WA0015.jpg" alt="Moment 3" /></div>
+      <div class="card"><img src="IMG-20251207-WA0013.jpg" alt="Moment 4" /></div>
+      <div class="card"><img src="IMG-20251207-WA0012.jpg" alt="Moment 5" /></div>
     </div>
 
     <button class="message-btn hidden">💌 Play game</button>
   </div>
+
 
 <!-- Floating Icon Script -->
 <script>
@@ -59,13 +60,15 @@ for (let i = 0; i < count; i++) {
 }
 </script>
 
-<!-- Slideshow + Swipe Logic -->
+
+<!-- Slideshow + Swipe Logic (FULLY FIXED VERSION) -->
 <script>
 const stack = document.querySelector(".card-stack");
 const cards = Array.from(stack.querySelectorAll(".card"));
 
 let currentIndex = 0;
 
+/* Initial layout update */
 function updateStack() {
   cards.forEach((card, index) => {
     const offset = index - currentIndex;
@@ -76,18 +79,24 @@ function updateStack() {
 }
 updateStack();
 
-/* Auto Swipe */
-let autoSwipeTimer = setInterval(() => {
+/* ---------------------------
+   FIXED AUTO-SWIPE FUNCTION
+-----------------------------*/
+function autoSwipe() {
   currentIndex++;
 
   if (currentIndex >= cards.length) {
-    currentIndex = cards.length - 1;
     clearInterval(autoSwipeTimer);
+    currentIndex = cards.length - 1;  // stay on last card
     showChoicePopup();
     return;
   }
+
   updateStack();
-}, 2500);
+}
+
+let autoSwipeTimer = setInterval(autoSwipe, 2500);
+
 
 /* Popup */
 function showChoicePopup() {
@@ -114,14 +123,15 @@ function showChoicePopup() {
     try {
       const frame = window.parent.document.getElementById("contentFrame");
       if (frame) {
-        frame.src = "game.html"; 
+        frame.src = "game.html";
         return;
       }
     } catch (e) {}
 
-    window.location.href = "game.html";  // fallback
+    window.location.href = "game.html";
   };
 }
+
 
 /* Manual Swipe */
 function enableSwipeEvents() {
