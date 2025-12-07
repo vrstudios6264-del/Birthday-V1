@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Special Messages</title>
+  <link rel="stylesheet" href="www4.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+<div class="floating-icons"></div>
+
+  <!-- Background content that will blur -->
+  <div class="blur-wrapper">
+    <div class="message-container">
+      <h1 class="page-title">💌 Special Messages</h1>
+      <p class="subtitle">For Gowdaa</p>
+    </div>
+  </div>
+
+  <!-- Card stack (hidden until tap) -->
+  <!-- Card stack (hidden until tap) -->
+<div class="card-stack">
+  <div class="card" style="background: linear-gradient(to right, #00c9ff, #92fe9d);">
+    <h3>You're Amazing 👏</h3>
+    <p>You're absolutely wonderful and deserve all the happiness in the world!</p>
+  </div>
+  <div class="card" style="background: linear-gradient(to right, #ff6a00, #ee0979);">
+    <h3>Dream Big ✨</h3>
+    <p>May all your dreams come true and your year be filled with magic and wonder!</p>
+  </div>
+  <div class="card" style="background: linear-gradient(to right, #f7971e, #ffd200);">
+    <h3>Stay Strong 💪</h3>
+    <p>You're stronger than you know, and loved more than you realize.</p>
+  </div>
+  <div class="card" style="background: linear-gradient(to right, #8e2de2, #4a00e0);">
+    <h3>Shine Bright 🌟</h3>
+    <p>Your light makes the world a better place—keep shining!</p>
+  </div>
+</div>
+
+  <!-- Message box -->
+  <div class="message-box" onclick="revealMessage()">
+    <div class="envelope">
+      <span class="heart">❤️</span>
+      <p class="tap-text">Tap to open your first message</p>
+    </div>
+    <p class="remaining-text">4 messages remaining</p>
+  </div>
+
+  <!-- Sound effect -->
+  <audio id="pop-sound" src="pop.mp3" preload="auto"></audio>
+
+
+<!--floatin icon-->
+<script>
+  const container = document.querySelector('.floating-icons');
+  const icons = ['🎀'];
+  const count = 90; // Number of floating icons
+
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement('span');
+    span.classList.add('float-icon');
+    span.textContent = icons[Math.floor(Math.random() * icons.length)];
+    span.style.top = `${Math.random() * 100}vh`;
+    span.style.left = `${Math.random() * 100}vw`;
+    span.style.animationDelay = `${Math.random() * 10}s`;
+    span.style.fontSize = `${Math.random() * 20 + 15}px`;
+    container.appendChild(span);
+  }
+</script>
+
+  <!-- Reveal logic -->
+  <script>
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const remainingText = document.querySelector('.remaining-text');
+    const tapText = document.querySelector('.tap-text');
+    const stack = document.querySelector('.card-stack');
+    const blurWrapper = document.querySelector('.blur-wrapper');
+    const popSound = document.getElementById('pop-sound');
+    let currentIndex = 0;
+
+    function updateStack() {
+      cards.forEach((card, index) => {
+        card.classList.remove('visible', 'top', 'second', 'third');
+        if (index === currentIndex) {
+          card.classList.add('visible', 'top');
+        } else if (index === currentIndex + 1) {
+          card.classList.add('visible', 'second');
+        } else if (index === currentIndex + 2) {
+          card.classList.add('visible', 'third');
+        }
+      });
+    }
+
+    function fireConfetti() {
+      confetti({
+        particleCount: 500,
+        spread: 90,
+        origin: { y: 0.6 },
+        colors: ['#ff69b4', '#ffd700', '#00c9ff', '#ff6a00']
+      });
+    }
+
+    function revealMessage() {
+      if (currentIndex === 0) {
+        stack.style.display = 'block';
+        blurWrapper.classList.add('blur-active');
+      }
+
+      if (currentIndex < cards.length) {
+        updateStack();
+        if (popSound) popSound.play();
+
+        const remaining = cards.length - currentIndex - 1;
+        remainingText.textContent = `${remaining} message${remaining !== 1 ? 's' : ''} remaining`;
+
+        if (remaining === 0) {
+          tapText.textContent = "All messages opened. Tap to reset";
+          fireConfetti();
+        }
+
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+        cards.forEach(card => {
+          card.classList.remove('visible', 'top', 'second', 'third');
+        });
+        stack.style.display = 'none';
+        blurWrapper.classList.remove('blur-active');
+        remainingText.textContent = `${cards.length} messages remaining`;
+        tapText.textContent = "Tap to open your first message";
+      }
+    }
+  </script>
+
+<footer>
+  <p>© 2025 | Built by @Lavan</a></p>
+</footer>
+
+<style>
+  footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+  }
+</style>
+
+</body>
+</html>

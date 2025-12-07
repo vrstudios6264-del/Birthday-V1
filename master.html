@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Celebration</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body style="margin:0; padding:0;">
+
+<!-- Background Music -->
+<audio id="bgMusic" src="happy_10min.mp3" loop></audio>
+
+<!-- Main Content Frame -->
+<iframe 
+  id="contentFrame"
+  src="www1.html"
+  allow="autoplay"
+  sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups"
+  style="width:100vw; height:100vh; border:0;">
+</iframe>
+
+<script>
+// Start music when a child page (www1, www2, etc.) requests it
+window.startMusic = () => {
+  const audio = document.getElementById("bgMusic");
+  audio.play().catch(err => console.log("Music error:", err));
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Baloo 2', cursive;
+  background: radial-gradient(circle at center, #0b0014, #000814);
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.blur-wrapper.blur-active {
+  filter: blur(6px);
+  transition: filter 0.3s ease;
+}
+
+.message-container {
+  text-align: center;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+.page-title {
+  font-size: 2.5em;
+  font-family: 'Shantell Sans', cursive;
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  z-index: 1;
+}
+
+.card-stack {
+  position: relative;
+  width: 280px;
+  height: 160px;
+  margin-bottom: 20px;
+  display: none;
+  z-index: 1000;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 0.9em;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform-origin: center bottom;
+  overflow: hidden;
+  color: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Visible cards */
+.card.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Stack effect */
+.card.top {
+  transform: translateY(0) scale(1);
+  z-index: 3;
+}
+.card.second {
+  transform: translateY(10px) scale(0.97);
+  z-index: 2;
+}
+.card.third {
+  transform: translateY(20px) scale(0.94);
+  z-index: 1;
+}
+
+.message-box {
+  width: 320px;
+  height: 180px;
+  background: linear-gradient(to right, #ff1493, #ff69b4);
+  border-radius: 30px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 15px #ff69b4;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2em;
+  z-index: 9999;
+}
+
+.envelope {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heart {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.tap-text {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.remaining-text {
+  font-size: 1em;
+}
+
+/* Floating background icons */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-icon {
+  position: absolute;
+  opacity: 0.1;
+  animation: drift 8s linear infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(30px) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Loading screen content */

@@ -1,0 +1,196 @@
+/* =========================================================
+   GLOBAL PAGE STYLES (Used for www1 + www2)
+========================================================= */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Baloo 2", cursive;
+  background: radial-gradient(circle at center, #1a1a2e, #0f0f1c);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Main container animation */
+.container {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   REUSABLE CELEBRATION ELEMENTS
+========================================================= */
+
+/* Icon circle (www1 page) */
+.icon-circle {
+  font-size: 45px;
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 18px rgba(255, 110, 196, 0.6);
+}
+
+/* Cake icon (www2 page) */
+.cake-icon {
+  font-size: 120px;
+  margin-bottom: 0px;
+}
+
+/* Name text (www2) */
+.name {
+  font-size: 2.4em;
+  color: #ffccff;
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
+
+/* Titles */
+.title1,
+.title {
+  font-size: 3em;
+  background: linear-gradient(90deg, #ff6ec4, #7873f5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 10px 0 5px;
+}
+
+/* Subtitles */
+.subtitle1,
+.subtitle {
+  font-size: 1.3em;
+  margin-bottom: 15px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.celebrate-btn {
+  background: linear-gradient(90deg, #ff6aa6, #9b5de5, #381bd7);
+  border: none;
+  padding: 12px 28px;
+  font-size: 1.1em;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(255, 110, 196, 0.5);
+  transition: transform 0.25s ease;
+}
+
+.celebrate-btn:hover {
+  transform: scale(1.07);
+}
+
+/* Magic link */
+.magic-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #ffccff;
+  font-size: 1.05em;
+  text-decoration: none;
+}
+
+.magic-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   CONFETTI CANVAS
+========================================================= */
+
+#confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================================================
+   FLOATING ICONS — Smooth, Light, Responsive
+========================================================= */
+
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.float-icon {
+  position: absolute;
+  opacity: 0.25;
+  animation: floatSmooth infinite linear;
+  will-change: transform;
+}
+
+/* Smooth floating animation */
+@keyframes floatSmooth {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+  50%  { transform: translateY(-25px) translateX(12px) scale(1.15); opacity: 0.45; }
+  100% { transform: translateY(25px) translateX(-12px) scale(1); opacity: 0.3; }
+}
+
+/* =========================================================
+   RESPONSIVE — Android / Tablet / Laptop
+========================================================= */
+
+/* Phones */
+@media (max-width: 480px) {
+  .title1, .title { font-size: 2.2em; }
+  .subtitle1, .subtitle { font-size: 1.1em; }
+  .icon-circle { width: 70px; height: 70px; font-size: 35px; }
+  .cake-icon { font-size: 90px; }
+  .float-icon { font-size: 6px !important; }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .float-icon { font-size: 12px !important; }
+}
+
+/* Laptops / Desktop */
+@media (min-width: 769px) {
+  .float-icon { font-size: 20px; }
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+  z-index: 5;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0; padding:0; background:transparent;">
+
+<audio id="bgMusic" src="happy_10min.mp3" loop></audio>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  window.addEventListener("message", (event) => {
+    if (event.data === "START_MUSIC") {
+
+      audio.play().catch(() => {
+        // If mobile prevents autoplay, activate on first tap
+        document.body.addEventListener("click", () => {
+          audio.play();
+        }, { once: true });
+      });
+
+    }
+  });
+</script>
+
+</body>
+</html>

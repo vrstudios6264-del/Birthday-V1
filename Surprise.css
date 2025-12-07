@@ -1,0 +1,116 @@
+/* Base layout */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #0b0014, #000814);
+  font-family: 'Baloo 2', cursive;
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Main container */
+.birthday-container {
+  text-align: center;
+  max-width: 600px;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* GIF image */
+.gif-box img {
+  width: 200px;
+  height: auto;
+  margin-bottom: 0px;
+}
+
+/* Gradient title lines */
+.birthday-line1,
+.birthday-line2 {
+  font-weight: bold;
+  background: linear-gradient(to right, #ff4da6, #a64dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  margin: 0;
+}
+
+.birthday-line1 {
+  font-size: 3.5em;
+  font-family: 'Dancing Script', cursive;
+  letter-spacing: 3px;
+  margin-bottom: 0px;
+}
+
+.birthday-line2 {
+  font-size: 2.5em;
+  font-family: 'Dancing Script', cursive;
+  letter-spacing: 2px;
+  margin-bottom: 0px;
+}
+
+/* Subtext */
+.birthday-subtext {
+  font-size: 1.2em;
+  font-family: 'Baloo 2', cursive;
+  color: #fbfeff; /* Aqua green */
+  margin-bottom: 20px;
+}
+
+/* Surprise button */
+.surprise-btn {
+  background: linear-gradient(to right, #ff1493, #ff69b4);
+  border: none;
+  border-radius: 40px;
+  padding: 16px 32px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 20px #681cf5;
+  transition: transform 0.2s ease;
+}
+
+.surprise-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Floating icon container (optional if using JS) */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Individual floating icon */
+.float-icon {
+  position: absolute;
+  opacity: 0.3;
+  animation: drift 8s linear infinite;
+  font-size: 2em;
+}
+
+/* Floating animation */
+@keyframes drift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(30px) scale(1);
+    opacity: 0.3;
+  }
+}

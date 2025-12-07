@@ -1,0 +1,200 @@
+/* Full-screen layout */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(to right, #1a0b1f, #000814);
+  font-family: 'Baloo 2', cursive;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Center content */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+/* Title and subtitle */
+.title {
+  font-size: 2.5em;
+  background: linear-gradient(to right, #ff69b4, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1em;
+  color: #ccc;
+  margin: 0;
+}
+
+/* Card stack */
+.card-stack {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  perspective: 1000px;
+  z-index: 2;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: translateX(0);
+  cursor: grab;
+  z-index: 2;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Message button */
+.message-btn {
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-size: 1em;
+  background: linear-gradient(to right, #ff69b4, #8a2be2);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff69b4;
+  transition: opacity 0.5s ease, transform 0.2s ease;
+}
+
+.message-btn:hover {
+  transform: scale(1.05);
+}
+
+.message-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.message-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Floating icons behind everything */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.float-icon {
+  position: absolute;
+  opacity: 0.25;
+  animation: floatSmooth infinite linear;
+  will-change: transform;
+}
+
+/* Smooth floating animation */
+@keyframes floatSmooth {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+  50%  { transform: translateY(-25px) translateX(12px) scale(1.15); opacity: 0.45; }
+  100% { transform: translateY(25px) translateX(-12px) scale(1); opacity: 0.3; }
+}
+
+/* Responsive icon sizes */
+
+/* Android phones */
+@media (max-width: 480px) {
+  .float-icon {
+    font-size: 6px !important;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .float-icon {
+    font-size: 12px !important;
+  }
+}
+
+/* Laptops / Desktop */
+@media (min-width: 769px) {
+  .float-icon {
+    font-size: 20px;
+  }
+}
+
+
+/* Popup Choice Box */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.popup-box {
+  background: #1b0130;
+  padding: 25px 35px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 20px #ff69b4;
+  animation: pop 0.3s ease-out;
+}
+
+.popup-box h2 {
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  background: linear-gradient(to right, #ff69b4, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#repeat-btn,
+#play-btn {
+  padding: 12px 25px;
+  margin: 8px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(to right, #ff69b4, #8a2be2);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+#repeat-btn:hover,
+#play-btn:hover {
+  transform: scale(1.06);
+}
+
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

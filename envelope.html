@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Special Letter</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="envelope.css" />
+
+  <!-- Confetti Script -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Floating Icons Background -->
+  <div class="floating-icons"></div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1 class="main-title">A Special Letter</h1>
+    <p class="subtitle">Just for you, on your special day <span class="arrow">▾</span></p>
+
+    <div class="envelope-box" onclick="openMessage()">
+      <div class="envelope-icon">📩</div>
+      <p class="click-text">Click to open</p>
+    </div>
+  </div>
+
+<script>
+/* ----------------------------------------------------
+      FLOATING ICONS (Same smooth style as other pages)
+------------------------------------------------------*/
+
+const container = document.querySelector(".floating-icons");
+const iconSet = ["🎀"];
+const count = 80;
+
+// Responsive icon sizing
+const width = window.innerWidth;
+let minSize, maxSize;
+
+if (width <= 480) { minSize = 6; maxSize = 12; }
+else if (width <= 768) { minSize = 10; maxSize = 18; }
+else { minSize = 15; maxSize = 32; }
+
+for (let i = 0; i < count; i++) {
+  const span = document.createElement("span");
+  span.classList.add("float-icon");
+  span.textContent = iconSet[0];
+
+  span.style.top = `${Math.random() * 100}vh`;
+  span.style.left = `${Math.random() * 100}vw`;
+
+  // Smooth animation
+  span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+  span.style.animationDelay = `${Math.random() * 5}s`;
+
+  // Size
+  span.style.fontSize = `${Math.random() * (maxSize - minSize) + minSize}px`;
+
+  container.appendChild(span);
+}
+
+/* ----------------------------------------------------
+      CONFETTI + GO TO MESSAGE PAGE (inside iframe)
+------------------------------------------------------*/
+function openMessage() {
+  confetti({
+    particleCount: 300,
+    spread: 100,
+    origin: { y: 0.6 },
+    colors: ["#ff69b4", "#ffd700", "#00c9ff", "#ff6a00"]
+  });
+
+  setTimeout(() => {
+    try {
+      const frame = window.parent.document.getElementById("contentFrame");
+      if (frame) {
+        frame.src = "message.html";
+        return;
+      }
+    } catch (e) {}
+
+    // fallback if opened directly
+    window.location.href = "message.html";
+  }, 1200);
+}
+</script>
+
+<footer>
+  <p>© 2025 | Built by @Lavan</p>
+</footer>
+
+<style>
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
+</style>
+
+</body>
+</html>

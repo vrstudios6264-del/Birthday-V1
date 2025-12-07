@@ -1,0 +1,145 @@
+/* ---------------- BACKGROUND ---------------- */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #0b0014, #000814);
+  font-family: 'Shantell Sans', cursive;
+  color: white;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------------- CONTENT ---------------- */
+.content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.main-title {
+  font-size: 2.2em;
+  background: linear-gradient(to right, #ff69b4, #ffb6c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  color: #ffd6e8;
+  margin-bottom: 30px;
+}
+
+.arrow {
+  font-size: 1.2em;
+  color: #ff69b4;
+}
+
+/* ---------------- MESSAGE BOX ---------------- */
+.message-box {
+  width: 90%;
+  max-width: 420px;
+  height: 300px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff69b4;
+  color: #000814;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.scroll-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
+.typed-text {
+  white-space: pre-wrap;
+  font-size: 1em;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* ---------------- CORNER HEARTS ---------------- */
+.corner-icon {
+  position: absolute;
+  font-size: 1.5em;
+  pointer-events: none;
+}
+
+.top-right { top: 10px; right: 15px; }
+.bottom-left { bottom: 10px; left: 15px; }
+
+/* ---------------- BUTTON ---------------- */
+.button-row {
+  display: flex;
+  justify-content: center;
+}
+
+.continue-btn {
+  display: none;
+  padding: 8px 20px;
+  background: linear-gradient(to right, #8a2be2, #6a0dad);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #a64dff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.continue-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ---------------- FLOATING ICONS ---------------- */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Smooth drifting animation (same as www1.css) */
+.float-icon {
+  position: absolute;
+  opacity: 0.25;
+  animation: floatSmooth infinite linear;
+  will-change: transform, opacity;
+}
+
+@keyframes floatSmooth {
+  0% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-25px) translateX(12px) scale(1.15);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(25px) translateX(-12px) scale(1);
+    opacity: 0.25;
+  }
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}

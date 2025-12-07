@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Surprise</title>
+  <link rel="stylesheet" href="Surprise.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="floating-icons"></div>
+  <div class="birthday-container">
+    <div class="gif-box">
+      <img src="intro.gif" alt="Birthday Gif" />
+    </div>
+
+    <h1 class="birthday-line1">XYZ was born today,</h1>
+    <h1 class="birthday-line2">20 years ago!</h1>
+    <p class="birthday-subtext">Yes, it's <strong>XYZ!</strong> A little surprise awaits...</p>
+    <button class="surprise-btn">!! Start the surprise !!</button>
+  </div>
+
+  <!-- Floating icons script -->
+  <script>
+    const container = document.querySelector('.floating-icons');
+    const icons = ['🎀'];
+    const count = 95;
+
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.classList.add('float-icon');
+      span.textContent = icons[Math.floor(Math.random() * icons.length)];
+      span.style.top = `${Math.random() * 100}vh`;
+      span.style.left = `${Math.random() * 100}vw`;
+      span.style.animationDelay = `${Math.random() * 10}s`;
+      span.style.fontSize = `${Math.random() * 20 + 15}px`;
+      container.appendChild(span);
+    }
+  </script>
+
+  <!-- Empty footer that will be filled by obfuscated JS -->
+  <footer id="ftr"></footer>
+
+  <!-- Obfuscated footer text injection -->
+  <script>
+    (function(){
+      const _0x4a=["\u00A9 2025 | Built by @Lavan","innerHTML","ftr"];
+      document.getElementById(_0x4a[2])[_0x4a[1]]=_0x4a[0];
+    })();
+  </script>
+
+  <style>
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+
+</body>
+</html>

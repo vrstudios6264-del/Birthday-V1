@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparing Something Special</title>
+
+  <link rel="stylesheet" href="wwwMain.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Floating bows -->
+  <div class="floating-icons"></div>
+
+  <div class="container">
+    <img src="tq.gif" alt="Loading..." class="loading-gif" />
+    <h1 class="title">Thank you for your most valuable time, Manoj</h1>
+    <p class="subtitle">...I hope you liked this small surprise from me...</p>
+  </div>
+
+  <!-- Floating Icons Script -->
+  <script>
+    const container = document.querySelector(".floating-icons");
+    const icons = ["🎀"];
+    const width = window.innerWidth;
+
+    let minSize, maxSize;
+
+    if (width <= 480) { minSize = 6; maxSize = 12; }
+    else if (width <= 768) { minSize = 10; maxSize = 18; }
+    else { minSize = 15; maxSize = 32; }
+
+    for (let i = 0; i < 80; i++) {
+      const span = document.createElement("span");
+      span.classList.add("float-icon");
+      span.textContent = "🎀";
+
+      span.style.top = `${Math.random() * 100}vh`;
+      span.style.left = `${Math.random() * 100}vw`;
+
+      span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+
+      const size = Math.random() * (maxSize - minSize) + minSize;
+      span.style.fontSize = `${size}px`;
+
+      container.appendChild(span);
+    }
+  </script>
+
+  <footer>
+    <p>© 2025 | Built by @Lavan</p>
+  </footer>
+
+</body>
+</html>

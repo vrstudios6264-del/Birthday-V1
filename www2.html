@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+
+  <link rel="stylesheet" href="www1.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Floating background icons -->
+  <div class="floating-icons"></div>
+
+  <!-- Main birthday content -->
+  <div class="container">
+    <div class="cake-icon">🎂</div>
+
+    <h1 class="title">Happy Birthday!</h1>
+    <h2 class="name">Manoj 💕</h2>
+    <p class="subtitle">🎉 It's your special day! 🎉</p>
+
+    <button id="celebrateBtn" class="celebrate-btn">Let's cut the cake!!</button>
+  </div>
+
+  <!-- Floating Icons Script -->
+  <script>
+    const container = document.querySelector('.floating-icons');
+    const icons = ['🎀'];
+    const count = 60;
+
+    const isMobile = window.innerWidth <= 600;
+    const minSize = isMobile ? 8 : 15;
+    const maxSize = isMobile ? 15 : 35;
+
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.classList.add('float-icon');
+      span.textContent = icons[0];
+
+      span.style.top = `${Math.random() * 100}vh`;
+      span.style.left = `${Math.random() * 100}vw`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+
+      const size = Math.random() * (maxSize - minSize) + minSize;
+      span.style.fontSize = `${size}px`;
+
+      container.appendChild(span);
+    }
+  </script>
+
+  <!-- Button → Continue + Navigate -->
+  <script>
+    document.getElementById("celebrateBtn").addEventListener("click", () => {
+
+      // 1️⃣ Ensure music is still playing (does nothing if already playing)
+      try {
+        if (window.parent && window.parent.startMusic) {
+          window.parent.startMusic();
+        }
+      } catch (err) { console.warn("Music start failed"); }
+
+      // 2️⃣ Navigate to Cake Page
+      try {
+        const frame = window.parent.document.getElementById("contentFrame");
+        if (frame) {
+          frame.src = "sortcake.html";
+          return;
+        }
+      } catch (e) {}
+
+      // Fallback if opened directly
+      window.location.href = "sortcake.html";
+    });
+  </script>
+
+  <footer>
+    <p>© 2025 | Built by @Lavan</p>
+  </footer>
+
+  <style>
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparing Something Special</title>
+  <link rel="stylesheet" href="wwwMain.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Floating bows -->
+  <div class="floating-icons"></div>
+
+  <!-- Main content -->
+  <div class="container">
+    <img src="surprise.gif" alt="Loading..." class="loading-gif" />
+    <h1 class="title">Preparing Something Special</h1>
+    <p class="subtitle">...To serve you special...</p>
+  </div>
+
+  <!-- Floating icons + redirect -->
+  <script>
+    const container = document.querySelector('.floating-icons');
+    const icons = ['🎀'];
+    const count = 60;
+
+    const isMobile = window.innerWidth <= 600;
+    const minSize = isMobile ? 8 : 15;
+    const maxSize = isMobile ? 15 : 35;
+
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.classList.add('float-icon');
+      span.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+      span.style.top = `${Math.random() * 100}vh`;
+      span.style.left = `${Math.random() * 100}vw`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+
+      const size = Math.random() * (maxSize - minSize) + minSize;
+      span.style.fontSize = `${size}px`;
+
+      container.appendChild(span);
+    }
+
+    // Redirect to master.html after 4 seconds
+    setTimeout(() => {
+      window.location.href = "master.html";
+    }, 4000);
+  </script>
+
+  <footer>
+    <p>© 2025 | Built by @Lavan</p>
+  </footer>
+
+  <style>
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+
+</body>
+</html>

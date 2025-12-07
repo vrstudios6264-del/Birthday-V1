@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Special Letter</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="message.css" />
+</head>
+
+<body>
+
+  <!-- Floating icon background -->
+  <div class="floating-icons"></div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1 class="main-title">A Special Letter</h1>
+    <p class="subtitle">Just for you, on your special day <span class="arrow">▾</span></p>
+
+    <div class="message-box">
+      <div class="corner-icon top-right">❤️</div>
+
+      <div class="scroll-area" id="scroll-area">
+        <div class="typed-text" id="typed-text"></div>
+      </div>
+
+      <div class="corner-icon bottom-left">❤️</div>
+
+      <div class="button-row">
+        <button class="continue-btn" id="continueBtn" onclick="goNext()">⏭️ Continue</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ------------------------------------------------------
+   LETTER CONTENT
+-------------------------------------------------------*/
+const message = `My Dearest Manoj,
+
+On this very special day, I want you to know how incredibly grateful I am to have you in my life.
+Your birthday isn’t just a celebration of another year – it’s a celebration of all the joy, laughter,
+drama, and beautiful memories you bring into this world.
+
+Yes, you get angry for no reason, act all serious, and throw attitude like it’s your hidden talent…
+but behind all that, you have one of the purest, softest, most golden hearts ever.
+That’s the part of you that truly shines — even when you pretend it doesn’t.
+
+You have this amazing ability to light up any room you enter — sometimes with your smile,
+sometimes with your jokes, and sometimes just by being your chaotic, dramatic, adorable self.
+Even in your angry mode, you somehow still make people laugh, feel seen, and feel cared for.
+Your heart is pure gold, and your presence is absolutely infectious.
+
+Thank you for being the wonderful, amazing, frustratingly loveable, unintentionally hilarious,
+and genuinely fantastic person that you are.
+The world is brighter, happier, and definitely more entertaining because you're in it.
+
+Happy Birthday, beautiful soul! 🎂✨
+
+Sending you joy, laughter, and a little reminder to stop being angry for no reason,
+With Endless Gratitude 💕
+`;
+
+const typedText = document.getElementById("typed-text");
+const scrollArea = document.getElementById("scroll-area");
+
+let index = 0;
+
+function typeMessage() {
+  if (index < message.length) {
+    typedText.textContent += message.charAt(index);
+    index++;
+
+    scrollArea.scrollTop = scrollArea.scrollHeight;
+    setTimeout(typeMessage, 35); // smooth typing
+  } else {
+    document.getElementById("continueBtn").style.display = "inline-block";
+  }
+}
+
+window.onload = () => {
+  typeMessage();
+  generateFloatingIcons();
+};
+
+
+/* ------------------------------------------------------
+   GO TO FINAL PAGE (lastp.html)
+-------------------------------------------------------*/
+function goNext() {
+  try {
+    const frame = window.parent.document.getElementById("contentFrame");
+    if (frame) {
+      frame.src = "lastp.html";
+      return;
+    }
+  } catch (e) {}
+
+  // fallback if opened directly
+  window.location.href = "lastp.html";
+}
+
+
+/* ------------------------------------------------------
+   FLOATING ICON GENERATOR
+-------------------------------------------------------*/
+function generateFloatingIcons() {
+  const container = document.querySelector(".floating-icons");
+  const count = 90;
+
+  const width = window.innerWidth;
+  let minSize, maxSize;
+
+  if (width <= 480) { minSize = 6; maxSize = 12; }
+  else if (width <= 768) { minSize = 10; maxSize = 18; }
+  else { minSize = 15; maxSize = 32; }
+
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement("span");
+    span.classList.add("float-icon");
+    span.textContent = "🎀";
+
+    span.style.top = `${Math.random() * 100}vh`;
+    span.style.left = `${Math.random() * 100}vw`;
+
+    span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+    span.style.animationDelay = `${Math.random() * 5}s`;
+
+    span.style.fontSize = `${Math.random() * (maxSize - minSize) + minSize}px`;
+
+    container.appendChild(span);
+  }
+}
+</script>
+
+<footer>
+  <p>© 2025 | Built by @Lavan</p>
+</footer>
+
+</body>
+</html>

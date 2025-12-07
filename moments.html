@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Some Sweet Moments</title>
+
+  <link rel="stylesheet" href="moments.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Floating icons -->
+  <div class="floating-icons"></div>
+
+  <!-- Bunting -->
+  <div class="bunting"></div>
+
+  <!-- Main content -->
+  <div class="content">
+    <h1 class="title">Some Sweet Moments</h1>
+    <p class="subtitle">(Swipe the cards or let them auto-play)</p>
+
+    <div class="card-stack">
+      <div class="card"><img src="WhatsApp Image 2025-11-02 at 10.17.21_d4dc7bf9.jpg" alt="Moment 1" /></div>
+      <div class="card"><img src="WhatsApp Image 2025-11-02 at 10.17.22_783f2eec.jpg" alt="Moment 2" /></div>
+      <div class="card"><img src="WhatsApp Image 2025-11-02 at 10.17.27_035802c6.jpg" alt="Moment 3" /></div>
+      <div class="card"><img src="WhatsApp Image 2025-11-02 at 10.17.21_d4dc7bf9.jpg" alt="Moment 4" /></div>
+      <div class="card"><img src="WhatsApp Image 2025-11-02 at 10.17.22_783f2eec.jpg" alt="Moment 5" /></div>
+    </div>
+
+    <button class="message-btn hidden">💌 Play game</button>
+  </div>
+
+<!-- Floating Icon Script -->
+<script>
+const container = document.querySelector('.floating-icons');
+const floatIcons = ['🎀'];
+const count = 60;
+const isMobile = window.innerWidth <= 600;
+
+const minSize = isMobile ? 8 : 15;
+const maxSize = isMobile ? 15 : 35;
+
+for (let i = 0; i < count; i++) {
+  const span = document.createElement('span');
+  span.classList.add('float-icon');
+  span.textContent = floatIcons[0];
+
+  span.style.top = `${Math.random() * 100}vh`;
+  span.style.left = `${Math.random() * 100}vw`;
+  span.style.animationDelay = `${Math.random() * 5}s`;
+
+  const size = Math.random() * (maxSize - minSize) + minSize;
+  span.style.fontSize = `${size}px`;
+
+  container.appendChild(span);
+}
+</script>
+
+<!-- Slideshow + Swipe Logic -->
+<script>
+const stack = document.querySelector(".card-stack");
+const cards = Array.from(stack.querySelectorAll(".card"));
+
+let currentIndex = 0;
+
+function updateStack() {
+  cards.forEach((card, index) => {
+    const offset = index - currentIndex;
+    card.style.zIndex = cards.length - index;
+    card.style.transform = `translateX(${offset * 20}px) scale(${1 - Math.abs(offset) * 0.05})`;
+    card.style.opacity = Math.abs(offset) > 2 ? 0 : 1;
+  });
+}
+updateStack();
+
+/* Auto Swipe */
+let autoSwipeTimer = setInterval(() => {
+  currentIndex++;
+
+  if (currentIndex >= cards.length) {
+    currentIndex = cards.length - 1;
+    clearInterval(autoSwipeTimer);
+    showChoicePopup();
+    return;
+  }
+  updateStack();
+}, 2500);
+
+/* Popup */
+function showChoicePopup() {
+  const popup = document.createElement("div");
+  popup.className = "popup";
+
+  popup.innerHTML = `
+    <div class="popup-box">
+      <h2>What would you like to do?</h2>
+      <button id="repeat-btn">🔄 Repeat</button>
+      <button id="play-btn">🎮 Play Game</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  document.getElementById("repeat-btn").onclick = () => {
+    popup.remove();
+    currentIndex = 0;
+    updateStack();
+    autoSwipeTimer = setInterval(autoSwipe, 2500);
+  };
+
+  document.getElementById("play-btn").onclick = () => {
+    try {
+      const frame = window.parent.document.getElementById("contentFrame");
+      if (frame) {
+        frame.src = "game.html"; 
+        return;
+      }
+    } catch (e) {}
+
+    window.location.href = "game.html";  // fallback
+  };
+}
+
+/* Manual Swipe */
+function enableSwipeEvents() {
+  let startX = null, currentX = null, isDragging = false;
+
+  const start = (x) => {
+    isDragging = true;
+    startX = x;
+    currentX = x;
+    clearInterval(autoSwipeTimer);
+  };
+
+  const move = (x) => {
+    if (!isDragging) return;
+    currentX = x;
+    const dx = currentX - startX;
+    const topCard = cards[currentIndex];
+
+    if (topCard) {
+      topCard.style.transition = "none";
+      topCard.style.transform = `translateX(${dx}px) rotate(${dx / 10}deg)`;
+    }
+  };
+
+  const end = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const dx = currentX - startX;
+    const topCard = cards[currentIndex];
+
+    if (!topCard) return;
+
+    topCard.style.transition = "transform 0.3s ease";
+
+    if (dx < -80 && currentIndex < cards.length - 1) {
+      currentIndex++;
+      updateStack();
+      if (currentIndex === cards.length - 1) showChoicePopup();
+
+    } else if (dx > 80 && currentIndex > 0) {
+      currentIndex--;
+      updateStack();
+
+    } else {
+      topCard.style.transform = "translateX(0) rotate(0)";
+    }
+  };
+
+  stack.addEventListener("mousedown", (e) => start(e.clientX));
+  stack.addEventListener("mousemove", (e) => move(e.clientX));
+  stack.addEventListener("mouseup", end);
+  stack.addEventListener("mouseleave", end);
+
+  stack.addEventListener("touchstart", (e) => start(e.touches[0].clientX));
+  stack.addEventListener("touchmove", (e) => move(e.touches[0].clientX));
+  stack.addEventListener("touchend", (e) => { currentX = e.changedTouches[0].clientX; end(); });
+}
+
+enableSwipeEvents();
+</script>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 | Built by @Lavan</p>
+</footer>
+
+<style>
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
+</style>
+
+</body>
+</html>

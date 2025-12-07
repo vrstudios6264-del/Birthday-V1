@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Cake</title>
+
+  <link rel="stylesheet" href="sortcake.css">
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Hidden Title Behind Cake -->
+  <h1 class="cake-back-title" id="cakeBackTitle">
+    <span class="line1">Happiest Birthday</span>
+    <span class="line2">Manoj</span>
+  </h1>
+
+  <!-- Cake Structure -->
+  <div class="cake">
+    <div class="plate"></div>
+    <div class="layer layer-bottom"></div>
+    <div class="layer layer-middle"></div>
+    <div class="layer layer-top"></div>
+    <div class="icing"></div>
+    <div class="drip drip1"></div>
+    <div class="drip drip2"></div>
+    <div class="drip drip3"></div>
+
+    <!-- Candle -->
+    <div class="candle">
+      <div class="flame"></div>
+    </div>
+  </div>
+
+  <div class="flag-strip"></div>
+
+  <!-- Buttons -->
+  <button class="decorate-btn">🎉 Decorate</button>
+  <button id="celebrate-btn" style="display:none;">🎊 Celebrate</button>
+
+  <!-- Floating Icons -->
+  <div class="floating-icons"></div>
+
+  <footer>
+    <p>© 2025 | Built by @Lavan</p>
+  </footer>
+
+
+<!-- Floating icons script -->
+<script>
+const container = document.querySelector('.floating-icons');
+const icons = ['🎀'];
+const isMobile = window.innerWidth <= 600;
+const count = 60;
+
+const minSize = isMobile ? 8 : 15;
+const maxSize = isMobile ? 15 : 35;
+
+for (let i = 0; i < count; i++) {
+  const span = document.createElement('span');
+  span.classList.add('float-icon');
+  span.textContent = icons[0];
+
+  span.style.top = `${Math.random() * 100}vh`;
+  span.style.left = `${Math.random() * 100}vw`;
+  span.style.animationDelay = `${Math.random() * 5}s`;
+
+  const size = Math.random() * (maxSize - minSize) + minSize;
+  span.style.fontSize = `${size}px`;
+
+  container.appendChild(span);
+}
+</script>
+
+
+<script>
+// Elements
+const decorateBtn = document.querySelector('.decorate-btn');
+const celebrateBtn = document.getElementById('celebrate-btn');
+const flagStrip = document.querySelector('.flag-strip');
+const candle = document.querySelector('.candle');
+const flame = document.querySelector('.flame');
+const cakeBackTitle = document.getElementById("cakeBackTitle");
+
+// Hide candle + title initially
+flame.style.display = "none";
+cakeBackTitle.style.opacity = "0";
+cakeBackTitle.style.transform = "translateX(-50%) translateY(10px)";
+
+
+// -----------------------------
+// STEP 1 → DECORATE
+// -----------------------------
+decorateBtn.addEventListener('click', () => {
+  flagStrip.classList.add('show');
+
+  decorateBtn.style.display = 'none';
+  celebrateBtn.style.display = 'inline-block';
+});
+
+
+// -----------------------------
+// STEP 2 → CELEBRATE
+// -----------------------------
+celebrateBtn.addEventListener('click', () => {
+
+  // 🔊 NEW: Make sure music keeps playing (from master.html)
+  try {
+    if (window.parent && window.parent.startMusic) {
+      window.parent.startMusic();
+    }
+  } catch (err) {
+    console.warn("Music could not be triggered.");
+  }
+
+  candle.classList.add('show');
+  flame.style.display = "block";
+
+  // Show Title Animation
+  cakeBackTitle.classList.add("show");
+  cakeBackTitle.style.opacity = "1";
+  cakeBackTitle.style.transform = "translateX(-50%) translateY(-10px)";
+
+  fireConfetti();
+  setTimeout(fireConfetti, 800);
+
+  // After animation → change button → go to next page
+  setTimeout(() => {
+    celebrateBtn.textContent = "➡️ See the Moments";
+
+    celebrateBtn.onclick = () => {
+
+      // Navigate inside master iframe
+      try {
+        const frame = window.parent.document.getElementById("contentFrame");
+        if (frame) {
+          frame.src = "moments.html";
+          return;
+        }
+      } catch (e) {}
+
+      // Direct open fallback
+      window.location.href = "moments.html";
+    };
+
+  }, 1400);
+});
+
+
+// Confetti Animation
+function fireConfetti() {
+  confetti({ particleCount: 250, spread: 70, origin: { x: 0, y: 0.6 } });
+  confetti({ particleCount: 250, spread: 70, origin: { x: 1, y: 0.6 } });
+  confetti({ particleCount: 300, spread: 100, origin: { x: 0.5, y: 0.8 } });
+  confetti({ particleCount: 200, spread: 100, origin: { x: 0, y: 1 } });
+  confetti({ particleCount: 200, spread: 100, origin: { x: 1, y: 1 } });
+}
+</script>
+
+</body>
+</html>

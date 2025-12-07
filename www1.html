@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time to Celebrate!</title>
+
+  <link rel="stylesheet" href="www1.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Floating Background Icons -->
+  <div class="floating-icons"></div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="icon-circle">🎁</div>
+
+    <h1 class="title1">Time to Celebrate!</h1>
+    <p class="subtitle1">The countdown is over... Let's celebrate! 🎉</p>
+
+    <button id="celebrateBtn" class="celebrate-btn">🎀 Let's Celebrate!</button>
+  </div>
+
+  <!-- FLOATING ICON SCRIPT -->
+  <script>
+    const containerIcons = document.querySelector('.floating-icons');
+    const icons = ['🎀'];
+    const count = 80;
+
+    const width = window.innerWidth;
+    let minSize = width <= 480 ? 6 : width <= 768 ? 10 : 18;
+    let maxSize = width <= 480 ? 12 : width <= 768 ? 18 : 32;
+
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.classList.add('float-icon');
+      span.textContent = icons[0];
+
+      span.style.top = `${Math.random() * 100}vh`;
+      span.style.left = `${Math.random() * 100}vw`;
+      span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      span.style.fontSize = `${Math.random() * (maxSize - minSize) + minSize}px`;
+
+      containerIcons.appendChild(span);
+    }
+  </script>
+
+  <!-- CONFETTI SCRIPT -->
+  <script>
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const confettiPieces = [];
+
+    function createConfetti() {
+      for (let i = 0; i < 150; i++) {
+        confettiPieces.push({
+          x: Math.random() * canvas.width,
+          y: canvas.height + Math.random() * 200,
+          size: Math.random() * 8 + 4,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          speedY: Math.random() * -3 - 2,
+          speedX: Math.random() * 2 - 1,
+          rotation: Math.random() * 360,
+          rotationSpeed: Math.random() * 10 - 5
+        });
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach((c) => {
+        c.x += c.speedX;
+        c.y += c.speedY;
+        c.rotation += c.rotationSpeed;
+
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.rotate((c.rotation * Math.PI) / 180);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+        ctx.restore();
+      });
+
+      requestAnimationFrame(animateConfetti);
+    }
+
+    // -------------------------------
+    // START MUSIC + NAVIGATE
+    // -------------------------------
+    document.getElementById("celebrateBtn").addEventListener("click", () => {
+
+      // 1️⃣ Start background music (allowed because user clicked)
+      try {
+        if (window.parent && window.parent.startMusic) {
+          window.parent.startMusic();
+        }
+      } catch (err) { console.warn("Could not start music"); }
+
+      // 2️⃣ Confetti animation
+      createConfetti();
+      animateConfetti();
+
+      // 3️⃣ Navigate to www2.html after animation
+      setTimeout(() => {
+        try {
+          const frame = window.parent.document.getElementById("contentFrame");
+          if (frame) frame.src = "www2.html";
+          else window.location.href = "www2.html";
+        } catch (e) { window.location.href = "www2.html"; }
+      }, 1500);
+    });
+  </script>
+
+  <footer>
+    <p>© 2025 | Built by @Lavan</p>
+  </footer>
+
+</body>
+</html>

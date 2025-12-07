@@ -1,0 +1,137 @@
+  /* ----------------------- PAGE LAYOUT ----------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #0b0014, #000814);
+  font-family: 'Shantell Sans', cursive;
+  color: white;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------------------- CONTENT ----------------------- */
+.content {
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  padding: 20px;
+}
+
+.main-title {
+  font-size: 2.2em;
+  background: linear-gradient(to right, #ff69b4, #ffb6c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  color: #ffd6e8;
+  margin-bottom: 25px;
+}
+
+.arrow {
+  font-size: 1.2em;
+  color: #ff69b4;
+}
+
+/* ----------------------- ENVELOPE BOX ----------------------- */
+.envelope-box {
+  background: linear-gradient(to right, #ffc0cb, #ffb6c1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #ff69b4;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.envelope-box:hover {
+  transform: scale(1.07);
+}
+
+.envelope-icon {
+  font-size: 2.6em;
+  margin-bottom: 12px;
+  color: #d1005d;
+}
+
+.click-text {
+  font-size: 1.1em;
+  color: #d1005d;
+  font-weight: bold;
+}
+
+/* ----------------------- FLOATING ICONS ----------------------- */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Smooth floating animation (same style as other pages) */
+.float-icon {
+  position: absolute;
+  opacity: 0.25;
+  animation: floatSmooth 10s linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes floatSmooth {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-35px) translateX(12px) scale(1.15);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(35px) translateX(-12px) scale(1);
+    opacity: 0.25;
+  }
+}
+
+/* ----------------------- FOOTER ----------------------- */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  z-index: 5;
+}
+
+/* ----------------------- MOBILE RESPONSIVE ----------------------- */
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 1.9em;
+  }
+
+  .subtitle {
+    font-size: 1em;
+  }
+
+  .envelope-box {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .envelope-icon {
+    font-size: 2.2em;
+  }
+
+  .click-text {
+    font-size: 1em;
+  }
+}

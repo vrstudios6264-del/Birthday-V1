@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Memory Match</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="game.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Floating Icons Container -->
+  <div class="floating-icons"></div>
+
+  <div class="game-wrapper">
+    <h1 class="game-title">Birthday Memory Match</h1>
+    <p class="game-subtitle">Find all 4 matching birthday icons!</p>
+
+    <div class="game-grid"></div>
+
+    <p class="game-status">Tap two cards to find a match!</p>
+    <div class="compliment-box" id="compliment-box"></div>
+
+    <button class="reset-button" onclick="createGameBoard()">🔄 Play Again</button>
+
+    <!-- Hidden until all matches found -->
+    <button id="message-btn" style="display:none;">💌 View Message</button>
+  </div>
+
+<script>
+/* -------------------------
+    GAME LOGIC
+---------------------------*/
+
+const gameGrid = document.querySelector('.game-grid');
+const gameStatus = document.querySelector('.game-status');
+const complimentBox = document.getElementById('compliment-box');
+
+const icons = ['🎂', '🎈', '🎁', '💖'];
+const compliments = {
+  '🎂': "You're as sweet as cake!",
+  '🎈': "You lift everyone's spirits!",
+  '🎁': "You're a gift to the world!",
+  '💖': "You're full of love and light!"
+};
+const winCompliment = "🎉 You did it! You're magical and unforgettable!";
+
+let cardValues = [];
+let flippedCards = [];
+let matchedCount = 0;
+
+function fireConfetti() {
+  confetti({
+    particleCount: 400,
+    spread: 80,
+    origin: { y: 0.6 },
+    colors: ['#ff69b4', '#ffd700', '#00c9ff', '#ff6a00']
+  });
+}
+
+function createGameBoard() {
+  const distractors = ['🌟']; // 1 extra tile → total 9 cards
+  cardValues = [...icons, ...icons, ...distractors].sort(() => Math.random() - 0.5);
+
+  flippedCards = [];
+  matchedCount = 0;
+
+  complimentBox.textContent = '';
+  gameStatus.textContent = "Tap two cards to find a match!";
+  gameGrid.innerHTML = '';
+
+  cardValues.forEach((icon, index) => {
+    const card = document.createElement('div');
+    card.classList.add('card-tile');
+    card.dataset.icon = icon;
+    card.textContent = '❓';
+
+    card.addEventListener('click', () => flipCard(card));
+    gameGrid.appendChild(card);
+  });
+}
+
+function flipCard(card) {
+  if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2)
+    return;
+
+  card.classList.add('flipped');
+  card.textContent = card.dataset.icon;
+  flippedCards.push(card);
+
+  if (flippedCards.length === 2) {
+    const [c1, c2] = flippedCards;
+
+    if (c1.dataset.icon === c2.dataset.icon && compliments[c1.dataset.icon]) {
+      c1.classList.add('matched');
+      c2.classList.add('matched');
+
+      complimentBox.textContent = compliments[c1.dataset.icon];
+      flippedCards = [];
+      matchedCount += 2;
+
+      if (matchedCount === icons.length * 2) {
+        gameStatus.textContent = "🎉 You matched all 4 birthday pairs!";
+        complimentBox.textContent = winCompliment;
+
+        document.getElementById("message-btn").style.display = "inline-block";
+        fireConfetti();
+      }
+
+    } else {
+      setTimeout(() => {
+        c1.classList.remove('flipped');
+        c2.classList.remove('flipped');
+        c1.textContent = '❓';
+        c2.textContent = '❓';
+        flippedCards = [];
+      }, 1000);
+    }
+  }
+}
+
+createGameBoard();
+</script>
+
+<!-- Floating Icons Script -->
+<script>
+window.onload = function () {
+  const container = document.querySelector('.floating-icons');
+  const icons = ['🎀'];
+  const count = 80;
+
+  const width = window.innerWidth;
+  let minSize, maxSize;
+
+  if (width <= 480) {
+    minSize = 6;  maxSize = 12;
+  } else if (width <= 768) {
+    minSize = 10; maxSize = 18;
+  } else {
+    minSize = 15; maxSize = 32;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement('span');
+    span.classList.add('float-icon');
+    span.textContent = icons[0];
+
+    span.style.top = `${Math.random() * 100}vh`;
+    span.style.left = `${Math.random() * 100}vw`;
+
+    span.style.animationDuration = `${Math.random() * 6 + 6}s`;
+    span.style.animationDelay = `${Math.random() * 5}s`;
+
+    span.style.fontSize = `${Math.random() * (maxSize - minSize) + minSize}px`;
+
+    container.appendChild(span);
+  }
+};
+</script>
+
+<!-- Message Button Navigation -->
+<script>
+document.getElementById("message-btn").addEventListener("click", () => {
+  try {
+    const frame = window.parent.document.getElementById("contentFrame");
+    if (frame) {
+      frame.src = "envelope.html";
+      return;
+    }
+  } catch (e) {}
+
+  window.location.href = "envelope.html"; // fallback
+});
+</script>
+
+<footer>
+  <p>© 2025 | Built by @Lavan</p>
+</footer>
+
+<style>
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+}
+</style>
+
+</body>
+</html>

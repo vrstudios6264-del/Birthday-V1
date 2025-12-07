@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Baloo 2', cursive;
+  background: radial-gradient(circle at center, #1a1a2e, #0f0f1c);
+  color: white;
+  height: 100vh;
+  display: flex;
+  position: relative;  /* ensures float layer sits behind */
+  z-index: 0;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Main container */
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* helps small screens */
+  box-sizing: border-box;
+}
+
+/* Responsive GIF */
+.loading-gif {
+  width: 60%;
+  max-width: 350px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/* Text styling */
+.title {
+  font-size: 2.4em;
+  background: linear-gradient(to right, #ff69b4, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0px;
+}
+
+.subtitle {
+  font-size: 1.6em;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* Floating background icons */
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.float-icon {
+  position: absolute;
+  opacity: 0.3;
+  animation: drift 8s linear infinite;
+}
+
+/* Floating animation */
+@keyframes drift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(30px) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* -------------------------- */
+/* 📱 MOBILE RESPONSIVENESS   */
+/* -------------------------- */
+@media (max-width: 480px) {
+  .loading-gif {
+    width: 75%;
+  }
+
+  .title {
+    font-size: 1.8em;
+  }
+
+  .subtitle {
+    font-size: 1.2em;
+  }
+}
+
+/* -------------------------- */
+/* 📱📱 SMALL–MEDIUM DEVICES  */
+/* -------------------------- */
+@media (max-width: 768px) {
+  .loading-gif {
+    width: 70%;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .subtitle {
+    font-size: 1.4em;
+  }
+}
+
+/* -------------------------- */
+/* 💻 Large Laptop Screens     */
+/* -------------------------- */
+@media (min-width: 1200px) {
+  .title {
+    font-size: 3em;
+  }
+
+  .subtitle {
+    font-size: 2em;
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9em;
+  color: #888;
+  z-index: 5;
+  pointer-events: none; /* avoids blocking taps */
+}
+
+footer p {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;  /* FIX: prevents text going beside other elements */
+}
